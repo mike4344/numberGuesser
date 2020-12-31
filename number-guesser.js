@@ -4,19 +4,19 @@ let rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout
 });
-let min;
-let max;
+
 let secretNumber;
+
 let randomInRange = (min, max) =>{
   return Math.floor(Math.random()* (max - min)) + min;
 }
 
 let askRange = (cb, cb2) =>{
-
     rl.question("enter a min number: ", answer =>{
-        min = Number(answer)
+        let min = Number(answer)
         rl.question("enter a max number: ", answer2 =>{
-            max = Number(answer2)
+           let max = Number(answer2)
+           console.log(`I'm thinking of a number between ${min} and ${max}...`)
             secretNumber = cb2(min, max)
             cb()
         })
