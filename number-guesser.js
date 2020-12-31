@@ -4,7 +4,7 @@ let rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout
 });
-
+let numAttempt
 let secretNumber;
 
 let randomInRange = (min, max) =>{
@@ -12,15 +12,23 @@ let randomInRange = (min, max) =>{
 }
 
 let askRange = (cb, cb2) =>{
+   let asklimit = () =>{
+    rl.question("enter a turn limit: ", answer =>{
+         numAttempt = Number(answer)
+
+
     rl.question("enter a min number: ", answer =>{
         let min = Number(answer)
         rl.question("enter a max number: ", answer2 =>{
            let max = Number(answer2)
            console.log(`I'm thinking of a number between ${min} and ${max}...`)
             secretNumber = cb2(min, max)
-            cb()
+            cb(numAttempt)
         })
     })
+   }
+   )}
+    asklimit()
 }
 // Begin by initializing a variable in the global scope named secretNumber to any positive integer. Later we will program this variable to be assigned at random, but for now we'll hard-code a value that we can test for quickly.
 
@@ -51,12 +59,17 @@ const checkGuess = num => {
 
 // Define a function named askGuess. The method should use the readline module's question method to ask the user to 'Enter a guess: '. If you need a refresher on how to use this method, check out the question docs. Once the user enters their number, the checkGuess function should be called with their number as an argument and the interface should be closed.
 
-const askGuess = () => {
+const askGuess = (numAttempt) => {
 
   rl.question('Enter a guess: ', answer => {
     let lastAnswer = checkGuess(Number(answer));
+   if (numAttempt === 0){
+       rl.close
+       console.log("loser")
+   }
     if(lastAnswer === false){
-        askGuess();
+
+        askGuess(numAttempt -1);
     } else {
     rl.close();
     }
