@@ -4,10 +4,26 @@ let rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout
 });
+let min;
+let max;
 
+let randomInRange = (min, max) =>{
+  return Math.floor(Math.random()* (max - min)) + min;
+}
+
+let askRange = () =>{
+
+    rl.question("enter a min number: ", answer =>{
+        min = answer
+        rl.question("enter a max number: ", answer2 =>{
+            max = answer2
+            rl.close()
+        })
+    })
+}
 // Begin by initializing a variable in the global scope named secretNumber to any positive integer. Later we will program this variable to be assigned at random, but for now we'll hard-code a value that we can test for quickly.
 
-const secretNumber = 12;
+const secretNumber = randomInRange(min, max)
 
 /*
 Define a function named checkGuess that accepts a number as an argument. It should compare that argument against the global secretNumber. It should have the following behavior:
@@ -44,6 +60,6 @@ const askGuess = () => {
     }
   })
 }
-
-askGuess();
+askRange()
+askGuess()
 // When accepting user input, there is a very important nuance to take into account. When the user enters their guess it will be interpreted as a string of numeric characters and not an actual number type! Depending on how you wrote your checkGuess function, this could be disastrous because:
